@@ -15,7 +15,9 @@ declare global {
     Presence: {
       // Example, real-time cursor coordinates
        cursor: { x: number; y: number } | null;
-       selection: string[]
+       selection: string[];
+       pencilDraft: [x: number, y: number, pressure: number][] | null;
+       pencilColour: Colour | null;
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.

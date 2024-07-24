@@ -1,7 +1,7 @@
 import { Kalam } from "next/font/google";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
-import { cn, colourToCss } from "@/lib/utils";
+import { cn, colourToCss, getContrastingTextColour } from "@/lib/utils";
 import { NoteLayer } from "@/types/canvas";
 import { useMutation } from "@liveblocks/react/suspense";
 
@@ -12,7 +12,7 @@ const font = Kalam({
 
 const calculateFontSize = (width: number, height: number) => {
     const maxFontSize = 96;
-    const scaleFactor = 0.5;
+    const scaleFactor = 0.15;
     const fontSizeBasedOnHeight = height * scaleFactor;
     const fontSizeBasedOnWidth = width * scaleFactor;
 
@@ -55,7 +55,7 @@ export const Note = ({ id, layer, onPointerDown, selectionColour }: NoteProps) =
             onPointerDown={(e) => onPointerDown(e, id)}
             style={{
                 outline: selectionColour ? `1px solid ${selectionColour}` : "none",
-                backgroundColor: fill ? colourToCss(fill) : "#000"
+                backgroundColor: fill ? colourToCss(fill) : colourToCss({ r: 255, g: 249, b: 177 })
             }}
             className="shadow-md drop-shadow-xl"
         >
@@ -66,7 +66,7 @@ export const Note = ({ id, layer, onPointerDown, selectionColour }: NoteProps) =
                             font.className )}
                 style={{ 
                     fontSize: calculateFontSize(width, height),
-                    color: fill ? colourToCss(fill) : "#000"
+                    color: fill ? getContrastingTextColour(fill) : "#000"
                 }}
                 />
         </foreignObject>
